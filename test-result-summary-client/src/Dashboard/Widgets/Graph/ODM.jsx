@@ -24,7 +24,7 @@ let display = {
     "Daily-ODM-zOS": true
 };
 
-let baselineValue = 7000;
+let baselineValue = 5500;
 
 export class ODMSetting extends Component {
     onChange = obj => {

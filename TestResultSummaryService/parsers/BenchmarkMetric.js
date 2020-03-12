@@ -75,7 +75,7 @@ const BenchmarkMetricRegex = {
                 higherbetter: false,
                 units: "kb",
             },
-            "Startup time in ms":{
+            "Startup time":{
                 //Example: Startup time: 7828
                 regex: /Startup time: (\d*\.?\d*)/,
                 higherbetter: false,
@@ -235,7 +235,106 @@ const BenchmarkMetricRegex = {
                 funcName: geomean,
             }
         }
-    }
+    },
+    quarkus_startup: {
+        outerRegex: /Quarkus Test:  measure \d*? ([\s\S\n]*)/,
+        //We print Quarkus Test: measure n after running warmup runs
+        //Example: Quarkus Test:  measure 3 ~ measure run text
+        metrics: {
+            "Footprint": {
+                //Example: Footprint for  warmup 0 10129332
+                regex:/Footprint for  measure \d*? (\d*\.?\d*)/,
+                higherbetter: false,
+                units: "kb",
+                },
+            "Startup time in ms": {
+                //Example: Startup time for measure 0 : 53232
+                regex:/Startup time for measure \d*? : (\d*\.?\d*)/,
+                higherbetter: false,
+                units: "ms",   
+            }
+        }
+    },
+    pingperf_throughput: {
+        outerRegex:/Running \d*? measures([\s\S\n]*)/, 
+        //We print Running n measures after running warmup runs
+        //Example: Running 3 measures ~ measure run text
+        metrics: {
+            "Baremetal throughput": {
+                //Example: Requests/sec: 100522.45/
+                regex:/Requests\/sec: (\d*\.?\d*)/,
+                higherbetter: true,
+                units: "Requests/sec"
+            },
+        }
+    },
+    restCrud_quarkus: {
+        outerRegex:/Measure \d*?([\s\S\n]*)/,
+        //We print Running n measures after running warmup runs
+        //Example: Running 3 measures ~ measure run text
+        metrics: {
+            "Throughput": {
+                //Example: Requests/sec: 15145.27
+                regex:/Requests\/sec: (\d*\.?\d*)/,
+                higherbetter: true,
+                units: "Requests/sec",
+            },
+        }
+    },
+    restCrud_multi_user_quarkus: {
+        metrics: {
+            "Throughput": {
+                //Example: Requests/sec: 15145.27  -- in multi user, we are running multiple scenarios in 1 run - using geomean as our metric.
+                regex:/Measure[\s\S\n]*?Requests\/sec: (\d*\.?\d*)/,
+                higherbetter: true,
+                units: "Requests/sec",
+                funcName: geomean,
+            },
+        }
+    },
+    getting_started: {
+        outerRegex:/Getting-Started Results([\s\S\n]*)/,
+        //Getting-Started has non-json format results printing before formatting into JSON type to remove duplicates, we only parse the JSON text
+        //Example: console outputs of test result ~  Getting-Started Results ~ JSON text { "1": {...}, "32": {"throughput": "33222.32"}} 
+        metrics: {
+            "Throughput geomean": {
+                //Example: "throughput": "6357.32"
+                regex:/"throughput": "(\d*\.?\d*)"/,
+                higherbetter: true,
+                units: 'Requests/sec',
+                funcName: geomean,
+            },
+            "Average Latency geomean": {
+                //Example: "latencyAvg": "5.68"
+                regex:/"latencyAvg": "(\d*\.?\d*)"/,
+                higherbetter: false,
+                units: 'ms',
+                funcName: geomean,
+            },
+            "Latency Max geomean": {
+                //Example: "latencyMax": "114.40"
+                regex:/"latencyMax": "(\d*\.?\d*)"/,
+                higherbetter: false,
+                units: 'ms',
+                funcName: geomean,
+            },
+            "Latency Stddev geomean": {
+                //Example: "latencyStddev": "21.43"
+                regex:/"latencyStddev": "(\d*\.?\d*)"/,
+                higherbetter: false,
+                units: "Stddev",
+                funcName: geomean,
+            },
+            "Startup Time geomean": {
+                //Example: "started": "93568"
+                regex:/"started": "(\d*\.?\d*)"/,
+                higherbetter: false,
+                units: "ms",
+                funcName: geomean,
+            },
+        },
+    },
+
 }
 
 module.exports = BenchmarkMetricRegex;

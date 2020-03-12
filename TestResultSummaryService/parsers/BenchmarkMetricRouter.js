@@ -35,6 +35,24 @@ const BenchmarkMetricRouter = {
     "Crypto-BB":{
         "default": "Crypto-BB",
     },
+    "getting-started": {
+        "0": "getting_started"
+    },
+    "crud_quarkus_java_test": {
+        "0": "quarkus_startup",
+    },
+    "pingperf-quarkus-jvm-docker": {
+        "0": "quarkus_startup",
+    },
+    "pingperf": {
+        "0": "pingperf_throughput",
+    },
+    "quarkusRestCrudDemo_quarkus_multiusers_test": {
+        "0": "restCrud_multi_user_quarkus",
+    },
+    "quarkusRestCrudDemo_quarkus_test": {
+        "0": "restCrud_quarkus"
+    }
 // ##################################### PERFFARM SPECIFIC ROUTER VALUES ################################
    "CleanedLibertyStartup": {
         "9dev-4way-0-256-qs": "LibertyStartup",

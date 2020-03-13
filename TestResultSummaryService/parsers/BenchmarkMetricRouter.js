@@ -52,7 +52,7 @@ const BenchmarkMetricRouter = {
     },
     "quarkusRestCrudDemo_quarkus_test": {
         "0": "restCrud_quarkus"
-    }
+    },
 // ##################################### PERFFARM SPECIFIC ROUTER VALUES ################################
    "CleanedLibertyStartup": {
         "9dev-4way-0-256-qs": "LibertyStartup",
